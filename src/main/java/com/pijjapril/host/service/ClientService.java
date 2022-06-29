@@ -3,12 +3,12 @@ package com.pijjapril.host.service;
 import com.pijjapril.host.domain.Client;
 import com.pijjapril.host.domain.dto.ClientInput;
 import com.pijjapril.host.domain.dto.ClientListDTO;
-import com.pijjapril.host.domain.dto.ReadClientDTO;
+import java.util.Map;
 
 public interface ClientService {
-    void create(String name) throws Exception;
+    Client create(String name, String ipAddress);
     Client get(Long clientId);
     ClientListDTO getList();
-    void update(Long clientId, Client client);
+    int update(Long clientId, ClientInput input);
     void remove(Long clientId);
 }

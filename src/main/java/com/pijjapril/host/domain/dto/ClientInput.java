@@ -1,6 +1,6 @@
 package com.pijjapril.host.domain.dto;
 
 public class ClientInput {
-    String name;
-    String ipAddress;
+    public String name;
+    public String ipAddress;
 }

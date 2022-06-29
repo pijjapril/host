@@ -25,13 +25,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	compileOnly("org.projectlombok:lombok:1.18.24")
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// QueryDSL
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	annotationProcessor(
 			"javax.persistence:javax.persistence-api",
 			"javax.annotation:javax.annotation-api",
-			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa",
+			"org.projectlombok:lombok:1.18.24")
 }
 
 // QueryDSL

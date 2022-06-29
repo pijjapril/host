@@ -1,40 +1,72 @@
 package com.pijjapril.host.service;
 
 import com.pijjapril.host.domain.Client;
-import com.pijjapril.host.domain.dto.ClientInput;
 import com.pijjapril.host.domain.dto.ClientListDTO;
-import com.pijjapril.host.domain.dto.ReadClientDTO;
 import com.pijjapril.host.repository.ClientRepository;
-
+import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.net.InetAddress;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import static com.pijjapril.host.domain.Client.createInfo;
 
+@Service
 public class ClientServiceImpl implements ClientService {
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
-    @Override
-    @Transactional
-    public void createClient(ClientInput input) {
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
     }
 
     @Override
-    public ReadClientDTO getClient(Long clientId) {
+    @Transactional
+    public void create(String name) throws Exception {
+        try {
+            InetAddress host = InetAddress.getByName(name);
+            String ipAddress = host.getHostAddress();
+            Client client = createInfo(name, ipAddress);
+            clientRepository.save(client);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public Client get(Long clientId) {
+        Client dto = null;
+        try {
+            Optional<Client> client = clientRepository.findById(clientId);
+            dto = client.get();
+            dto = clientRepository.findById(clientId).orElseThrow(() ->
+                    new NoSuchElementException(clientId + "is not exist"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dto;
+    }
+
+    @Override
+    public ClientListDTO getList() {
         return null;
     }
 
     @Override
-    public ClientListDTO clientList() {
-        return null;
+    @Transactional
+    public void update(Long clientId, Client client) {
+//        try {
+//            clientRepository.findById(clientId).orElseThrow(() ->
+//                    new NoSuchElementException(clientId + "is not exist"));
+//            client = createInfo(inetAddress.getHostName(), inetAddress.getHostAddress());
+//            clientRepository.save(client);
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
     @Transactional
-    public void updateClient(ClientInput input) {
-
-    }
-
-    @Override
-    @Transactional
-    public void removeClient(Long clientId) {
+    public void remove(Long clientId) {
 
     }
 }

@@ -1,8 +1,8 @@
 package com.pijjapril.host.service;
 
 import com.pijjapril.host.domain.Client;
+import com.pijjapril.host.domain.dto.ClientDTO;
 import com.pijjapril.host.domain.dto.ClientInput;
-import com.pijjapril.host.domain.dto.ClientListDTO;
 import com.pijjapril.host.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -19,14 +19,18 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
-    public Client create(String name, String ipAddress) {
+    public Client create(String name, String ipAddress) throws Exception{
         try {
+            if(!checkRow()){
+                throw new IllegalAccessException("Already 100 row exist");
+
+            }
             Client client = createInfo(name, ipAddress);
             return clientRepository.save(client);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
+        throw new Exception("Bad Request");
     }
     @Override
     public Client get(Long clientId) {
@@ -42,7 +46,7 @@ public class ClientServiceImpl implements ClientService {
         return dto;
     }
     @Override
-    public ClientListDTO getList() {
+    public ClientDTO getList() {
         return null;
     }
     @Override
@@ -51,8 +55,8 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> oClient = clientRepository.findById(clientId);
         if(oClient.isPresent()) {
             Client client = oClient.get();
-            client.setName(input.name);
-            client.setIp(input.ipAddress);
+            client.setName(input.getName());
+            client.setIp(input.getIpAddress());
 
             clientRepository.save(client);
             return 1;
@@ -68,7 +72,9 @@ public class ClientServiceImpl implements ClientService {
             e.printStackTrace();
         }
     }
-    private void InetAddress() {
 
+    private Boolean checkRow(){
+        long rowNum = clientRepository.count();
+        return rowNum <= 100;
     }
 }

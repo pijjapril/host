@@ -4,6 +4,8 @@ import com.pijjapril.util.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.time.Instant;
+
 @Getter
 @Setter
 @Entity
@@ -23,6 +25,8 @@ public class Client extends BaseEntity {
     private String ip;
     @Column(name = "alive")
     private Boolean alive = false;
+    @Column(name = "last_alived_at")
+    private Instant lastAlivedAt;
 
     public static Client createInfo(String name, String ip) {
         return new Client(name, ip);

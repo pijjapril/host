@@ -55,8 +55,8 @@ public class ClientController {
             String name = req.getRemoteHost();
             String ipAddress = req.getRemoteAddr();
 
-            input.name = name;
-            input.ipAddress = ipAddress;
+            input.setName(name);
+            input.setIpAddress(ipAddress);
 
             clientService.update(id, input);
         } catch (Exception e) {

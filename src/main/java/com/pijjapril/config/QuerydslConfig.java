@@ -1,4 +1,4 @@
-package com.pijjapril.host.config;
+package com.pijjapril.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;

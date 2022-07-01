@@ -3,6 +3,7 @@ package com.pijjapril.host.domain;
 import com.pijjapril.util.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.Instant;
 
@@ -11,20 +12,23 @@ import java.time.Instant;
 @Entity
 @Table(name = "hosts")
 public class Client extends BaseEntity {
-    protected Client() {}
+    protected Client() {
+    }
+
     protected Client(String name, String ip) {
         this.name = name;
         this.ip = ip;
     }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     @Column(name = "name", unique = true)
     private String name;
     @Column(name = "ip", unique = true)
     private String ip;
     @Column(name = "alive")
-    private Boolean alive = false;
+    private Boolean isAlive = false;
     @Column(name = "last_alived_at")
     private Instant lastAlivedAt;
 

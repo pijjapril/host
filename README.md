@@ -65,3 +65,50 @@
 - 단일 조회이며 호스트의 연결상태를 체크
 - lastAlivedAt은 마지막 Alive 시간
 - 현재 연결 상태라면 lastAlivedAt은 조회시간과 동일하다.
+
+
+---
+
+
+### env.yml
+```yml
+spring:
+  profiles:
+    active: local
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+    import:
+      - local.yml
+      - local-secret.yml
+```
+
+
+### local.yml
+```yml
+app:
+  datasource:
+    mysql:
+      url: jdbc:mariadb://localhost:3306/hostdb?createDatabaseIfNotExist=true
+      username: root
+      password: sin@2018
+```
+
+
+
+### local-secret.yml
+```yml
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/hostdb?createDatabaseIfNotExist=true
+    username: root
+    password: sin@2018
+  jpa:
+    hibernate:
+      ddl-auto: update
+  output:
+    ansi:
+      enabled: always
+```

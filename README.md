@@ -19,8 +19,6 @@
 
 - 스프링 프레임워크에서 제공하는 @CreatedDate 과 @LastModifiedDate를 이용하여 생성일자와 수정일자를 관리함
 
----
-
 
 ### API
 
@@ -67,5 +65,3 @@
 - 단일 조회이며 호스트의 연결상태를 체크
 - lastAlivedAt은 마지막 Alive 시간
 - 현재 연결 상태라면 lastAlivedAt은 조회시간과 동일하다.
-
-
